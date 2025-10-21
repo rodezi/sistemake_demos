@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Agent</title>
+</head>
+<body>
+    <h1>Text Agent Demo</h1>
+    <input type="text" id="userInput" placeholder="Escribe tu mensaje">
+    <button onclick="sendMessage()">Enviar</button>
+    <div id="chat"></div>
+
+    <script>
+        async function sendMessage() {
+            const message = document.getElementById("userInput").value;
+            const res = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message })
+            });
+            const data = await res.json();
+            document.getElementById("chat").innerHTML += "<p><b>Tú:</b> " + message + "</p>";
+            document.getElementById("chat").innerHTML += "<p><b>Agente:</b> " + data.reply + "</p>";
+        }
+    </script>
+</body>
+</html>
